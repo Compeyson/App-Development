@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package app.development;
 
 /**
@@ -28,13 +23,13 @@ public class AppDevelopment {
                     throws IllegalArgumentException{
         //throws illegal type
         if (type <= 0 || type >= 6) {
-            throw new IllegalArgumentException("Type has invalid value:" 
+            throw new IllegalArgumentException("Type has invalid value: " 
                     + type);
         }
         
         //throws illegal maximum
         if (max < 0 || max >= 11) {
-            throw new IllegalArgumentException("Maximum has invalid value:" 
+            throw new IllegalArgumentException("Maximum has invalid value: " 
                     + max);
         }
         
@@ -89,7 +84,7 @@ public class AppDevelopment {
     }
     
     /**
-     * This method returns exercise aimed to explain the order irrelevance 
+     * This method returns exercises aimed to explain the order irrelevance 
      *      principle
      * 
      * @param max is the highest count that one has to 
@@ -124,7 +119,8 @@ public class AppDevelopment {
     }
     
     /**
-     *  This method returns exercise aimed to explain the stable order principle
+     * This method returns exercises aimed to explain the stable order 
+     *      principle
      * 
      * @param max is the highest count that one has to 
      *      make to complete the exercise
@@ -141,7 +137,7 @@ public class AppDevelopment {
     }
     
     /**
-     * This method returns exercise aimed to explain the tangibility principle 
+     * This method returns exercises aimed to explain the tangibility principle 
      * 
      * @param max is the highest count that one has to 
      *      make to complete the exercise
@@ -152,9 +148,63 @@ public class AppDevelopment {
      * @return returns the exercise with correct values
      */
     public Exercise tangibility(int max, Exercise exercise){
-        
+        /*
+         * I have no idea how to implement this method :(
+         */
         
         return exercise;
+    }
+    
+    /**
+     * returns the image names for the exercises
+     * 
+     * @param kinds the amount of different kinds of images are 
+     *      allowed in the exercise
+     * @param method indicates the method to find the images, random 
+     *      or all of 1 kind
+     * @param count is the amount the images need to add up to in total
+     * @pre kinds > 0 && count >= 0
+     * @post count = 0;
+     * @return the name of the image
+     */
+    public String decideImages(int kinds, int method, int count) 
+            throws IllegalArgumentException{
+        //declaration of images
+        String[] imageNames = new String[]{"apple", "strawberry",
+            "banana", "pear", "orange"};
+        int imageCount = 3;     //maximum amount of object on image
+        
+        //throws illegal kind
+        if (kinds <= 0) {
+            throw new IllegalArgumentException("Kinds has invalid value: " 
+                    + kinds);
+        }
+        
+        //throws illegal count
+        if (count < 0) {
+            throw new IllegalArgumentException("Count has invalid value: " 
+                    + count);
+        }
+        
+        /*
+         * This method needs distinction between what to do and how and how 
+         *  many images need to be displayed
+         *
+         * the kinds of images are pulled from the array imageNames, how many 
+         * of each is in method than then the count need to be 0 at the end of 
+         * the method
+         */
+        
+        return "implemention required";
+    }
+    
+    /**
+     * returns images according to what the methods ask
+     * 
+     * @param imageName the name of the image necessary
+     */
+    public void locateImage(String imageName){
+        //implementing this inside android studio with other code present
     }
     
     /**
