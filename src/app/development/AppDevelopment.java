@@ -19,14 +19,12 @@ public class AppDevelopment {
      *      type of exercise that needs to be generated
      * @param max is the highest count that one has to 
      *      make to complete the exercise
-     * @param position is the places that the images are displayed 
-     *      in the application
      * @pre type > 0 && type < 6 && max => 0 && max < 11 && position > 0 
      * @return returns images at specific locations and the correct 
      *      answer button location
      * @throws IllegalArgumentException if precondition violated
      */
-    public Exercise generateExercise(int type, int max, int position) 
+    public Exercise generateExercise(int type, int max) 
                     throws IllegalArgumentException{
         //throws illegal type
         if (type <= 0 || type >= 6) {
@@ -40,12 +38,7 @@ public class AppDevelopment {
                     + max);
         }
         
-        //throws illegal position
-        if (position <= 0) {
-            throw new IllegalArgumentException("Position has invalid value:" 
-                    + position);
-        }
-        
+        //initialize return value
         Exercise exercise = new Exercise();
         
         /* 
@@ -58,19 +51,19 @@ public class AppDevelopment {
          */
         switch(type){
             case 1:
-                simpleCounting(max);
+                oneToOne(max, exercise);
                 break;
             case 2:
-                orderIrrelevance(max);
+                orderIrrelevance(max, exercise);
                 break;
             case 3:
-                cardinality(max);
+                cardinality(max, exercise);
                 break;
             case 4:
-                stableOrder(max);
+                stableOrder(max, exercise);
                 break;
             case 5:
-                tangibility(max);
+                tangibility(max, exercise);
                 break;
         }
             
@@ -79,31 +72,89 @@ public class AppDevelopment {
     }
     
     /**
-     * This method returns simple counting principle exercises
+     * This method returns exercises aimed to explain the one-to-one principle
      * 
      * @param max is the highest count that one has to 
      *      make to complete the exercise
+     * @param exercise is the exercise the top-level provides for the 
+     *      method to work in
      * @pre max >= 0
+     * @modifies exercise
+     * @return returns the exercise with correct values
      */
-    public int simpleCounting(int max){
+    public Exercise oneToOne(int max, Exercise exercise){
         
         
-        return 1;
+        return exercise;
     }
     
-    public void orderIrrelevance(int max){
+    /**
+     * This method returns exercise aimed to explain the order irrelevance 
+     *      principle
+     * 
+     * @param max is the highest count that one has to 
+     *      make to complete the exercise
+     * @param exercise is the exercise the top-level provides for the 
+     *      method to work in
+     * @pre max >= 0
+     * @modifies exercise
+     * @return returns the exercise with correct values
+     */
+    public Exercise orderIrrelevance(int max, Exercise exercise){
         
+        
+        return exercise;
     }
     
-    public void cardinality(int max){
+    /**
+     * This method returns exercises aimed to explain the cardinality principle
+     * 
+     * @param max is the highest count that one has to 
+     *      make to complete the exercise
+     * @param exercise is the exercise the top-level provides for the 
+     *      method to work in
+     * @pre max >= 0
+     * @modifies exercise
+     * @return returns the exercise with correct values
+     */
+    public Exercise cardinality(int max, Exercise exercise){
         
+        
+        return exercise;
     }
     
-    public void stableOrder(int max){
+    /**
+     *  This method returns exercise aimed to explain the stable order principle
+     * 
+     * @param max is the highest count that one has to 
+     *      make to complete the exercise
+     * @param exercise is the exercise the top-level provides for the 
+     *      method to work in
+     * @pre max >= 0
+     * @modifies exercise
+     * @return returns the exercise with correct values
+     */
+    public Exercise stableOrder(int max, Exercise exercise){
         
+        
+        return exercise;
     }
-    public void tangibility(int max){
+    
+    /**
+     * This method returns exercise aimed to explain the tangibility principle 
+     * 
+     * @param max is the highest count that one has to 
+     *      make to complete the exercise
+     * @param exercise is the exercise the top-level provides for the 
+     *      method to work in
+     * @pre max >= 0
+     * @modifies exercise
+     * @return returns the exercise with correct values
+     */
+    public Exercise tangibility(int max, Exercise exercise){
         
+        
+        return exercise;
     }
     
     /**

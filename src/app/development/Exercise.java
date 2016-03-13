@@ -10,7 +10,7 @@ package app.development;
  * @author Inez wester
  * @since 13/03/2016
  */
-class Exercise {
+public class Exercise {
     /*
      * variables in this class will probably be defined differently later 
      *      on however it is now about the names
