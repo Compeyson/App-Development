@@ -78,7 +78,9 @@ public class AppDevelopment {
      * @return returns the exercise with correct values
      */
     public Exercise oneToOne(int max, Exercise exercise){
-        
+        /*
+         * the basic exercises
+         */
         
         return exercise;
     }
@@ -96,7 +98,11 @@ public class AppDevelopment {
      * @return returns the exercise with correct values
      */
     public Exercise orderIrrelevance(int max, Exercise exercise){
-        
+        /*
+         * probably make exercise that are mirrors of eachother, so the first 
+         * exercise is an apple + a pear and then we switch the images for the
+         * second exercise
+         */
         
         return exercise;
     }
@@ -113,7 +119,10 @@ public class AppDevelopment {
      * @return returns the exercise with correct values
      */
     public Exercise cardinality(int max, Exercise exercise){
-        
+        /*
+         * more than or less than or equal to exercises, we should probably use 
+         * the correct signs as well ">", "<" and "="
+         */
         
         return exercise;
     }
@@ -131,7 +140,10 @@ public class AppDevelopment {
      * @return returns the exercise with correct values
      */
     public Exercise stableOrder(int max, Exercise exercise){
-        
+        /*
+         * somehow make clear that you count, 1,2,3,4 not 3,2,1,4 maybe by 
+         * incrementally increasing the amount they have to count
+         */
         
         return exercise;
     }
@@ -149,7 +161,9 @@ public class AppDevelopment {
      */
     public Exercise tangibility(int max, Exercise exercise){
         /*
-         * I have no idea how to implement this method :(
+         * I have no idea how to implement this method :(. Maybe by using other 
+         * things than just fruit, airplanes and ghosts. Not sure if this will 
+         * then satisfy the requirements of the tangibility principle
          */
         
         return exercise;
@@ -172,7 +186,8 @@ public class AppDevelopment {
         //declaration of images
         String[] imageNames = new String[]{"apple", "strawberry",
             "banana", "pear", "orange"};
-        int imageCount = 3;     //maximum amount of object on image
+        //maximum amount of object on image
+        int imageCount = 3;
         
         //throws illegal kind
         if (kinds <= 0) {
