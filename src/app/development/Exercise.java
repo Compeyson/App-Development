@@ -16,20 +16,20 @@ public class Exercise {
      *      on however it is now about the names
      */
     
-    String answer1;         //possible answer 1
-    String answer2;         //possible answer 2
-    String answer3;         //possible ansewr 3
+    Image answer1;         //possible answer 1
+    Image answer2;         //possible answer 2
+    Image answer3;         //possible ansewr 3
     
     //image slots 1-9, can be empty or filled with an image
-    String image1;
-    String image2;
-    String image3;
-    String image4;
-    String image5;
-    String image6;
-    String image7;
-    String image8;
-    String image9;
+    Image image1;
+    Image image2;
+    Image image3;
+    Image image4;
+    Image image5;
+    Image image6;
+    Image image7;
+    Image image8;
+    Image image9;
     
     //the position where the correct answer is located
     double [][]correctAnswer;

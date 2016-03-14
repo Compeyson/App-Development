@@ -5,8 +5,7 @@ package app.development;
  * @author Inez Wester
  * @since 14/03/2016
  */
-public class AppDevelopment {
-
+public class AppDevelopment {    
     /** 
      * method is the top-level of generating exercises
      *
@@ -14,7 +13,7 @@ public class AppDevelopment {
      *      type of exercise that needs to be generated
      * @param max is the highest count that one has to 
      *      make to complete the exercise
-     * @pre type > 0 && type < 6 && max => 0 && max < 11 && position > 0 
+     * @pre type > 0 && type < 6 && max > 0 && max < 11
      * @return returns images at specific locations and the correct 
      *      answer button location
      * @throws IllegalArgumentException if precondition violated
@@ -28,7 +27,7 @@ public class AppDevelopment {
         }
         
         //throws illegal maximum
-        if (max < 0 || max >= 11) {
+        if (max <= 0 || max >= 11) {
             throw new IllegalArgumentException("Maximum in generateExercise has "
                     + "invalid value: " + max);
         }
@@ -42,7 +41,7 @@ public class AppDevelopment {
          *   2: order irrelevance principle (order-irrelavance)
          *   3: larger than or equal to (cardinality, stable order)
          *   4: counting increase first 1,2,3,4 then 5 etc. (stable order)
-         *   5: tangibility???
+         *   5: tangibility
          */
         switch(type){
             case 1:
@@ -73,7 +72,7 @@ public class AppDevelopment {
      *      make to complete the exercise
      * @param exercise is the exercise the top-level provides for the 
      *      method to work in
-     * @pre max >= 0
+     * @pre max > 0
      * @modifies exercise
      * @return returns the exercise with correct values
      */
@@ -81,6 +80,8 @@ public class AppDevelopment {
         /*
          * the basic exercises
          */
+        
+        
         
         return exercise;
     }
@@ -198,10 +199,7 @@ public class AppDevelopment {
                     + "invalid value: "  + count);
         }
         
-        //load image
-        returnImage.object = imageNames[kind];
-        returnImage.count = count;
-        
+                
         return returnImage;
     }
     
@@ -218,10 +216,7 @@ public class AppDevelopment {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Image image = new Image();
-        
-        System.out.println(image.object + " " + Integer.toString(image.count));
-        // TODO code application logic here
+        //TODO code application logic here
     }
     
 }
