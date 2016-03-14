@@ -3,7 +3,7 @@ package app.development;
 /**
  *
  * @author Inez Wester
- * @since 13/03/2016
+ * @since 14/03/2016
  */
 public class AppDevelopment {
 
@@ -172,89 +172,45 @@ public class AppDevelopment {
     /**
      * returns the image names for the exercises
      * 
-     * @param kinds the amount of different kinds of images are 
-     *      allowed in the exercise
-     * @param method indicates the method to find the images, random 
-     *      or all of 1 kind
-     * @param count is the amount the images need to add up to in total
-     * @pre kinds > 0 && method > 0 && method <= 7 &&count >= 0
-     * @post count = 0;
+     * @param kind the kind of image that is sought
+     * @param count is the amount of objects that are requested in an image
+     * @pre kinds > 0 && kinds < 5 && count >= 0 && count <= 3
      * @return the name of the image
      * @throws IllegalArgumentException if preconditions are violated
      */
-    public String decideImages(int kinds, int method, int count) 
+    public Image loadImages(int kind, int count) 
             throws IllegalArgumentException{
         //declaration of images
         String[] imageNames = new String[]{"apple", "strawberry",
             "banana", "pear", "orange"};
-        //maximum amount of object on image
-        int imageCount = 3;
+        //image declaration
+        Image returnImage = new Image();
         
         //throws illegal kind
-        if (kinds <= 0) {
+        if (kind <= 0 || kind >= 5) {
             throw new IllegalArgumentException("Kinds in decideImages has "
-                    + "invalid value: " + kinds);
+                    + "invalid value: " + kind);
         }
-        
-        //throws illegal method
-        if (method <= 0 || method >= 8) {
-            throw new IllegalArgumentException("Methods in decideImages has "
-                    + "invalid value: " + method);
-        }
-        
+               
         //throws illegal count
-        if (count < 0) {
+        if (count <= 0 || count > 3) {
             throw new IllegalArgumentException("Count in decideImages has "
                     + "invalid value: "  + count);
         }
         
-        /*
-         * This method needs distinction between what to do and how and how 
-         *  many images need to be displayed
-         *
-         * the kinds of images are pulled from the array imageNames, how many 
-         * of each is in method than then the count need to be 0 at the end of 
-         * the method
-         */
+        //load image
+        returnImage.object = imageNames[kind];
+        returnImage.count = count;
         
-        /*
-         * Method desinction
-         * 1: only pictures of 1 pieces of fruit
-         * 2: pictures of 1 or 2 pieces of fruit
-         * 3: pictures of 1,2 or 3 pieces of fruit
-         */
-        switch(method){
-            case 1:
-                //simple only images of 1's
-                break;
-            case 2:
-                //int i is a workingnumber
-                int i;
-                i = (int)(Math.random() + 1);
-                if(i == 1){
-                    
-                }else{
-                    
-                }
-                break;
-            case 3:
-                /* int imageNumber is a number between 1 and imageCount and the
-                number of pieces of fruit in the image */
-                int imageNumber;
-                imageNumber = (int)(Math.random() * (imageCount - 1) + 1);
-                break;
-        }
-        
-        
-        return "implemention required";
+        return returnImage;
     }
     
     /**
      * returns images according to what the methods ask
      * 
-     * @param imageName the name of the image necessary
+     * @param image the object and count of the image that needs to be located
      */
-    public void locateImage(String imageName){
+    public void locateImage(Image image){
         //implementing this inside android studio with other code present
     }
     
@@ -262,6 +218,9 @@ public class AppDevelopment {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        Image image = new Image();
+        
+        System.out.println(image.object + " " + Integer.toString(image.count));
         // TODO code application logic here
     }
     
