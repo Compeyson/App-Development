@@ -23,14 +23,14 @@ public class AppDevelopment {
                     throws IllegalArgumentException{
         //throws illegal type
         if (type <= 0 || type >= 6) {
-            throw new IllegalArgumentException("Type has invalid value: " 
-                    + type);
+            throw new IllegalArgumentException("Type in generateExercise has "
+                    + "invalid value: " + type);
         }
         
         //throws illegal maximum
         if (max < 0 || max >= 11) {
-            throw new IllegalArgumentException("Maximum has invalid value: " 
-                    + max);
+            throw new IllegalArgumentException("Maximum in generateExercise has "
+                    + "invalid value: " + max);
         }
         
         //initialize return value
@@ -177,9 +177,10 @@ public class AppDevelopment {
      * @param method indicates the method to find the images, random 
      *      or all of 1 kind
      * @param count is the amount the images need to add up to in total
-     * @pre kinds > 0 && count >= 0
+     * @pre kinds > 0 && method > 0 && method <= 7 &&count >= 0
      * @post count = 0;
      * @return the name of the image
+     * @throws IllegalArgumentException if preconditions are violated
      */
     public String decideImages(int kinds, int method, int count) 
             throws IllegalArgumentException{
@@ -191,14 +192,20 @@ public class AppDevelopment {
         
         //throws illegal kind
         if (kinds <= 0) {
-            throw new IllegalArgumentException("Kinds has invalid value: " 
-                    + kinds);
+            throw new IllegalArgumentException("Kinds in decideImages has "
+                    + "invalid value: " + kinds);
+        }
+        
+        //throws illegal method
+        if (method <= 0 || method >= 8) {
+            throw new IllegalArgumentException("Methods in decideImages has "
+                    + "invalid value: " + method);
         }
         
         //throws illegal count
         if (count < 0) {
-            throw new IllegalArgumentException("Count has invalid value: " 
-                    + count);
+            throw new IllegalArgumentException("Count in decideImages has "
+                    + "invalid value: "  + count);
         }
         
         /*
@@ -209,6 +216,35 @@ public class AppDevelopment {
          * of each is in method than then the count need to be 0 at the end of 
          * the method
          */
+        
+        /*
+         * Method desinction
+         * 1: only pictures of 1 pieces of fruit
+         * 2: pictures of 1 or 2 pieces of fruit
+         * 3: pictures of 1,2 or 3 pieces of fruit
+         */
+        switch(method){
+            case 1:
+                //simple only images of 1's
+                break;
+            case 2:
+                //int i is a workingnumber
+                int i;
+                i = (int)(Math.random() + 1);
+                if(i == 1){
+                    
+                }else{
+                    
+                }
+                break;
+            case 3:
+                /* int imageNumber is a number between 1 and imageCount and the
+                number of pieces of fruit in the image */
+                int imageNumber;
+                imageNumber = (int)(Math.random() * (imageCount - 1) + 1);
+                break;
+        }
+        
         
         return "implemention required";
     }
