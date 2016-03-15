@@ -5,7 +5,15 @@ package app.development;
  * @author Inez Wester
  * @since 14/03/2016
  */
-public class AppDevelopment {    
+public class AppDevelopment {   
+    
+    //declaration of fruit images
+    String[] imageNames = new String[]{"apple", "strawberry",
+        "banana", "pear", "orange"};
+    //declaration of number images
+    String[] numberImages = new String[]{"1", "2", "3", "4", "5", "6", "7",
+        "8", "9"};
+        
     /** 
      * method is the top-level of generating exercises
      *
@@ -13,7 +21,7 @@ public class AppDevelopment {
      *      type of exercise that needs to be generated
      * @param max is the highest count that one has to 
      *      make to complete the exercise
-     * @pre type > 0 && type < 6 && max > 0 && max < 11
+     * @pre type > 0 && type < 6 && max > 1 && max < 11
      * @return returns images at specific locations and the correct 
      *      answer button location
      * @throws IllegalArgumentException if precondition violated
@@ -27,7 +35,7 @@ public class AppDevelopment {
         }
         
         //throws illegal maximum
-        if (max <= 0 || max >= 11) {
+        if (max <= 1 || max >= 11) {
             throw new IllegalArgumentException("Maximum in generateExercise has "
                     + "invalid value: " + max);
         }
@@ -72,7 +80,7 @@ public class AppDevelopment {
      *      make to complete the exercise
      * @param exercise is the exercise the top-level provides for the 
      *      method to work in
-     * @pre max > 0
+     * @pre max > 1
      * @modifies exercise
      * @return returns the exercise with correct values
      */
@@ -80,9 +88,58 @@ public class AppDevelopment {
         /*
          * the basic exercises
          */
+        int i;          //answer variable that can be modified
+        int j = 0;      //array counter
+        int answer;
+        int possibleAnswer1;
+        int possibleAnswer2;
+        int answermax;
+        int[] question = {0,0,0,0,0,0,0,0,0};
+        int random;
+                
+        //generate question
+        answer = (int)(Math.random()*(max - 1) + 1);
+        i = answer;
+        while(i > 0){
+            while(j < 9){
+                random = (int)(Math.random()* 2 + 1);
+                if(i >= random){
+                    question[j] = random;
+                    i = answer - random;
+                    j++;
+                }
+            }
+            System.out.println("Error: not enough question images to implement "
+                    + "answer");
+        }   
         
+        //generate "fake" answers maximum
+        if(max < 7){
+            answermax = max + (int)(.5 * max);
+        }else{
+            answermax = max;
+        }
+        //fakeanswer1
+        possibleAnswer1 = generateProxyAnswer(answermax, answer, 0);
+        //fakeanswer2
+        possibleAnswer2 = generateProxyAnswer(answermax, answer, 
+                possibleAnswer1);
+                        
+        //load question images
+        exercise.image1 = loadImages(0,question[0]);
+        exercise.image2 = loadImages(0,question[1]);
+        exercise.image3 = loadImages(0,question[2]);
+        exercise.image4 = loadImages(0,question[3]);
+        exercise.image5 = loadImages(0,question[4]);
+        exercise.image6 = loadImages(0,question[5]);
+        exercise.image7 = loadImages(0,question[6]);
+        exercise.image8 = loadImages(0,question[7]);
+        exercise.image9 = loadImages(0,question[8]);
         
-        
+        //assign answers to answer slots
+        exercise = assignAnswerSlots(exercise, answer, possibleAnswer1, 
+                possibleAnswer2);
+                
         return exercise;
     }
     
@@ -171,24 +228,99 @@ public class AppDevelopment {
     }
     
     /**
+     * Method generates fake answers
+     * 
+     * @param answerMax is the maximum value that an answer may have
+     * @param correctAnswer is the actual answer of the question
+     * @param fakeAnswer1 is an already generated "fake" answer
+     * @pre answerMax > 1 && answerMax < 11 && correctAnswer > 0 && 
+     *  correctAnswer < 11
+     * @return fakeanswer <= answerMax && fakeanswer != correctAnswer
+     * @throws IllegalArgumentException
+     */
+    public int generateProxyAnswer(int answerMax, int correctAnswer, 
+            int fakeAnswer1) throws IllegalArgumentException{
+        int proxyAnswer = -1;       //initialization "fake" answer
+        
+        //throws illegal maximum
+        if (answerMax <= 1 || answerMax >= 11) {
+            throw new IllegalArgumentException("Maximum in generateProxyAnswer"
+                    + " has invalid value: " + answerMax);
+        }
+        
+        //throws illegal answer
+        if (correctAnswer <= 1 || correctAnswer >= 11) {
+            throw new IllegalArgumentException("Correct answer in "
+                   + "generateProxyAnswer has invalid value: " + correctAnswer);
+        }
+                
+        //while loop to make fake answer with given parameters
+        while(proxyAnswer == -1){
+            proxyAnswer = (int)(Math.random()*(answerMax - 1) + 1);
+            if(proxyAnswer == correctAnswer || proxyAnswer == fakeAnswer1){
+                proxyAnswer = -1;
+            }
+        }
+        
+        return proxyAnswer;
+    }
+    /**
+     * Assign the answer and the possible answers to slot in the application
+     * 
+     * @param exercise is the exercise that will be returned, with no answer 
+     *      images assigned
+     * @param answer is the correct answer to the question
+     * @param possibleAnswer1 is a "fake" answer to the question
+     * @param possibleAnswer2 is a "fake" answer to the question
+     * @pre answer > 0 && possibleAnswer1 > 0 && possibleAnswer2 > 0
+     * @modifies exercise
+     * @return exercise with answers assigned and the location of the correct 
+     *      answer assigned
+     */
+    public Exercise assignAnswerSlots(Exercise exercise, int answer, 
+            int possibleAnswer1, int possibleAnswer2){
+        int k =0;
+        //TODO: implement correct randomization
+        //load answer images
+        while(k < 4){
+            k = (int)(Math.random()*2 + 1);
+            switch(k){
+                case 1:
+                    exercise.answer1 = loadImages(1,answer);
+                    exercise.correctAnswer = 1;
+                case 2:
+                    exercise.answer2 = loadImages(1,answer);
+                    exercise.correctAnswer = 2;
+                case 3:
+                    exercise.answer3 = loadImages(1,answer);
+                    exercise.correctAnswer = 3;
+            }
+            k = 1;
+            exercise.answer1 = loadImages(1,answer);
+            exercise.answer2 = loadImages(1,possibleAnswer1);
+            exercise.answer3 = loadImages(1,possibleAnswer2);
+        }
+        return exercise;
+    }
+    
+    
+    /**
      * returns the image names for the exercises
      * 
-     * @param kind the kind of image that is sought
+     * @param kind the kind of image that is sought (either an number or a 
+     *      picture
      * @param count is the amount of objects that are requested in an image
-     * @pre kinds > 0 && kinds < 5 && count >= 0 && count <= 3
+     * @pre kinds >= 0 && kinds <= 1 && count >= 0 && count <= 3
      * @return the name of the image
      * @throws IllegalArgumentException if preconditions are violated
      */
     public Image loadImages(int kind, int count) 
             throws IllegalArgumentException{
-        //declaration of images
-        String[] imageNames = new String[]{"apple", "strawberry",
-            "banana", "pear", "orange"};
         //image declaration
         Image returnImage = new Image();
         
         //throws illegal kind
-        if (kind <= 0 || kind >= 5) {
+        if (kind < 0 || kind >= 2) {
             throw new IllegalArgumentException("Kinds in decideImages has "
                     + "invalid value: " + kind);
         }

@@ -32,6 +32,6 @@ public class Exercise {
     Image image9;
     
     //the position where the correct answer is located
-    double [][]correctAnswer;
+    int correctAnswer;
     
 }
