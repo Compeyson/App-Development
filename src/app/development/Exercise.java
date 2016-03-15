@@ -8,7 +8,7 @@ package app.development;
 /**
  *
  * @author Inez wester
- * @since 13/03/2016
+ * @since 15/03/2016
  */
 public class Exercise {
     /*
@@ -33,5 +33,14 @@ public class Exercise {
     
     //the position where the correct answer is located
     int correctAnswer;
+    
+    public String ToString(Exercise exercise){
+        return "question: " + image1.object + " " + image2.object + " " + 
+                image3.object + image4.object + " " + image5.object + " " + 
+                image6.object + " " + image7.object + " " + image8.object + " " 
+                + image9.object + " answers: " + answer1.object + " " + 
+                answer2.object + " " + answer3.object + "correct answer: " + 
+                Integer.toString(correctAnswer);
+    }
     
 }

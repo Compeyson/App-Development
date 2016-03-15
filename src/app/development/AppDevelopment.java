@@ -85,9 +85,6 @@ public class AppDevelopment {
      * @return returns the exercise with correct values
      */
     public Exercise oneToOne(int max, Exercise exercise){
-        /*
-         * the basic exercises
-         */
         int i;          //answer variable that can be modified
         int j = 0;      //array counter
         int answer;
@@ -126,6 +123,7 @@ public class AppDevelopment {
                 possibleAnswer1);
                         
         //load question images
+        //this might be better to actually implement in loadImages
         exercise.image1 = loadImages(0,question[0]);
         exercise.image2 = loadImages(0,question[1]);
         exercise.image3 = loadImages(0,question[2]);
@@ -279,26 +277,66 @@ public class AppDevelopment {
      */
     public Exercise assignAnswerSlots(Exercise exercise, int answer, 
             int possibleAnswer1, int possibleAnswer2){
-        int k =0;
-        //TODO: implement correct randomization
+        int k;
+        int i = -1;
+        int j = -1;
+        int p = -1;
+        
         //load answer images
-        while(k < 4){
+        while(p == -1){
             k = (int)(Math.random()*2 + 1);
             switch(k){
                 case 1:
                     exercise.answer1 = loadImages(1,answer);
                     exercise.correctAnswer = 1;
+                    break;
                 case 2:
                     exercise.answer2 = loadImages(1,answer);
                     exercise.correctAnswer = 2;
+                    break;
                 case 3:
                     exercise.answer3 = loadImages(1,answer);
                     exercise.correctAnswer = 3;
+                    break;
             }
-            k = 1;
-            exercise.answer1 = loadImages(1,answer);
-            exercise.answer2 = loadImages(1,possibleAnswer1);
-            exercise.answer3 = loadImages(1,possibleAnswer2);
+                        
+            //same for possibleAnswer1, making sure not to load in same spot
+            while(i == -1){
+               i = (int)(Math.random()*2 + 1); 
+               if(i == k){
+                   i = -1;
+            }
+               switch(i){
+                case 1:
+                    exercise.answer1 = loadImages(1,possibleAnswer1);
+                    break;
+                case 2:
+                    exercise.answer2 = loadImages(1,possibleAnswer1);
+                    break;
+                case 3:
+                    exercise.answer3 = loadImages(1,possibleAnswer1);
+                    break;
+                }
+            }
+            
+            //same for possibleAnswer2, making sure not to load in same spot
+            while(j == -1){
+               j = (int)(Math.random()*2 + 1); 
+               if(j == k || j == i){
+                   j = -1;
+            }
+               switch(j){
+                case 1:
+                    exercise.answer1 = loadImages(1,possibleAnswer2);
+                    break;
+                case 2:
+                    exercise.answer2 = loadImages(1,possibleAnswer2);
+                    break;
+                case 3:
+                    exercise.answer3 = loadImages(1,possibleAnswer2);
+                    break;
+                }
+            }
         }
         return exercise;
     }
@@ -308,7 +346,7 @@ public class AppDevelopment {
      * returns the image names for the exercises
      * 
      * @param kind the kind of image that is sought (either an number or a 
-     *      picture
+     *      picture 0 stands for fruit images and 1 stands for numbers
      * @param count is the amount of objects that are requested in an image
      * @pre kinds >= 0 && kinds <= 1 && count >= 0 && count <= 3
      * @return the name of the image
@@ -318,6 +356,7 @@ public class AppDevelopment {
             throws IllegalArgumentException{
         //image declaration
         Image returnImage = new Image();
+        int image;
         
         //throws illegal kind
         if (kind < 0 || kind >= 2) {
@@ -331,6 +370,19 @@ public class AppDevelopment {
                     + "invalid value: "  + count);
         }
         
+        switch(kind){
+            case 0:
+                //decide fruit kind
+                image = (int)(Math.random() * (imageNames.length - 1));
+                returnImage.object = imageNames[image];
+                returnImage.count = count;
+                break;
+            case 1:
+                image = count - 1;
+                returnImage.object = imageNames[image];
+                returnImage.count = count;
+                break;                
+        }
                 
         return returnImage;
     }
