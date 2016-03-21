@@ -14,6 +14,8 @@ package app.development;
 public class Image {
     String object;      //the object of the image
     int count;          //the amount of objects in the image
+    
+    
 }
 
 
