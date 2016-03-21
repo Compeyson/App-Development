@@ -818,6 +818,7 @@ public class ExerciseGeneration {
         ExerciseGeneration e = new ExerciseGeneration(); 
         Exercise exercise = new Exercise();
         
+        //testing
         exercise = e.generateExercise(4, 1, exercise);
         System.out.println(e.printExercise(exercise));
         
