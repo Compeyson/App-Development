@@ -1,5 +1,4 @@
 package app.development;
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,7 +13,7 @@ public class ExerciseGeneration {
     String[] imageNames = new String[]{"apple", "strawberry",
         "banana", "pear", "orange"};
     //declaration of number images
-    String[] numberImages = new String[]{"1", "2", "3", "4", "5", "6", "7",
+    String[] numberImages = new String[]{"0", "1", "2", "3", "4", "5", "6", "7",
         "8", "9"};
     //yes, no and signs array
     String[] signsImages = new String[]{"yes", "no", "=", ">", "<", "empty"};
@@ -681,8 +680,7 @@ public class ExerciseGeneration {
                 }
                 break;
             case 1:
-                image = count - 1;
-                returnImage.object = numberImages[image];
+                returnImage.object = numberImages[count];
                 returnImage.count = count;
                 break;  
             case 2:
