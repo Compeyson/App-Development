@@ -1,6 +1,8 @@
 package app.development;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -596,82 +598,39 @@ public class ExerciseGeneration {
      */
     public Exercise assignAnswerSlots(Exercise exercise, int answer, 
             int possibleAnswer1, int possibleAnswer2){
-        int k = -1;
-        int i = -1;
-        int j = -1;
+        //System.out.println("Whoohoo in assignAnswerSlots method");
+        int count;
+        int[] workingArray = {answer, 
+                possibleAnswer1, possibleAnswer2};
+        List<Integer> result = new ArrayList();
         
-        System.out.println("Whoohoo in assignAnswerSlots method");
-        
-        //load answer images
-        while(k == -1){
-            k = (int)(Math.random()*3 + 1);
-            switch(k){
-                case 1:
-                    exercise.answer1 = loadImages(1,answer);
-                    exercise.correctAnswer = 1;
-                    break;
-                case 2:
-                    exercise.answer2 = loadImages(1,answer);
-                    exercise.correctAnswer = 2;
-                    break;
-                case 3:
-                    exercise.answer3 = loadImages(1,answer);
-                    exercise.correctAnswer = 3;
-                    break;
-                }   
-        }            
-        //same for possibleAnswer1, making sure not to load in same spot
-        while(i == -1){
-           i = (int)(Math.random()*3 + 1); 
-           if(i == k){
-               i = -1;
-        }
-           switch(i){
-            case 1:
-                exercise.answer1 = loadImages(1,possibleAnswer1);
-                break;
-            case 2:
-                exercise.answer2 = loadImages(1,possibleAnswer1);
-                break;
-            case 3:
-                exercise.answer3 = loadImages(1,possibleAnswer1);
-                break;
-            }
-           break;
-        }
-            
-        //same for possibleAnswer2, making sure not to load in same spot
-        while(j == -1){
-           if(i == 1 || k == 1){
-               if(i == 2 || k == 2){
-                   j = 3;
-               }
-           }
-           if(i == 1 || k == 1){
-               if(i == 3 || k == 3){
-                   j = 2;
-               }
-            }
-           if(i == 2 || k == 2){
-               if(i == 3 || k == 3){
-                   j = 1;
-               }
-            }
-           switch(j){
-            case 1:
-                exercise.answer1 = loadImages(1,possibleAnswer2);
-                break;
-            case 2:
-                exercise.answer2 = loadImages(1,possibleAnswer2);
-                break;
-            case 3:
-                exercise.answer3 = loadImages(1,possibleAnswer2);
-                break;
-            }
-           break;
+        for(int i : workingArray){
+            result.add(i);
         }
         
+        //shuffle answers
+        Collections.shuffle(result);
         
+        //load answer images calls
+        count = result.get(0);
+        exercise.answer1 = loadImages(1,count);
+        
+        count = result.get(1);
+        exercise.answer2 = loadImages(1,count);
+        
+        count = result.get(2);
+        exercise.answer3 = loadImages(1,count);
+        
+        
+        //load correct answer
+        if(exercise.answer1.count == answer){
+            exercise.correctAnswer = 1;
+        }else if(exercise.answer2.count == answer){
+            exercise.correctAnswer = 2;
+        }else{
+            exercise.correctAnswer = 3;
+        }
+         
         return exercise;
     }
     
@@ -774,7 +733,7 @@ public class ExerciseGeneration {
             question[j]= result.get(j);
         }
         
-        System.out.println("randomized question image locations");
+        //System.out.println("randomized question image locations");
         
         return question;
     }
