@@ -9,7 +9,7 @@ package app.development;
 /**
  *
  * @author Inez wester
- * @since 14/03/2016
+ * @since 24/03/2016
  */
 public class Image {
     String object;      //image file name

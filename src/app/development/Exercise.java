@@ -8,7 +8,7 @@ package app.development;
 /**
  *
  * @author Inez wester
- * @since 21/03/2016
+ * @since 24/03/2016
  */
 public class Exercise {
     /*
@@ -43,5 +43,8 @@ public class Exercise {
     
     //Question
     String question;
+    
+    //for order irrelevance method
+    int count;
        
 }

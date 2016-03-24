@@ -6,7 +6,7 @@ import java.util.List;
 /**
  *
  * @author Inez Wester
- * @since 21/03/2016
+ * @since 24/03/2016
  */
 public class ExerciseGeneration {   
     //declaration of fruit images
@@ -76,7 +76,7 @@ public class ExerciseGeneration {
                 break;
         }
             
-        System.out.println("In top-level method after case distinction");
+        //System.out.println("In top-level method after case distinction");
         return exercise;
     }
     
@@ -101,6 +101,7 @@ public class ExerciseGeneration {
         int[] fakeAnswers;
       
         System.out.println("Whoohoo in oneToOne method");
+        exercise.count = 0; //exercise has not yet been flipped
         
         //generate question
         answer = (int)(Math.random()* max  + 1);
@@ -177,6 +178,8 @@ public class ExerciseGeneration {
      * @return returns the exercise with correct values
      */
     public Exercise orderIrrelevance(int max, Exercise exercise){
+        exercise.count = 1;//exercise has already been flipped
+        
         Image saveLocation1 = exercise.image1;
         Image saveLocation4 = exercise.image4;
         Image saveLocation7 = exercise.image7;
@@ -746,7 +749,7 @@ public class ExerciseGeneration {
      * application
      */
     public Image[] loadArray(Exercise exercise){
-        Image[] finalOutput = null;
+        Image[] finalOutput = new Image[12];
         
         //filling return array
         for(int i = 0; i < 12; i++){
@@ -796,8 +799,10 @@ public class ExerciseGeneration {
     /**
      * Exercise to readable input (only for verifying uses)
      * 
+     * @param exercise
+     * @return 
      */
-    private String printExercise(Exercise exercise){
+    public String printExercise(Exercise exercise){
         String result;
         result = ("question: " + exercise.image1.object + " " +
                 Integer.toString(exercise.image1.count) + " " + 
@@ -824,21 +829,5 @@ public class ExerciseGeneration {
                 Integer.toString(exercise.correctAnswer));
         
         return result;
-    }
-            
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        //initiating classes
-        ExerciseGeneration e = new ExerciseGeneration(); 
-        Exercise exercise = new Exercise();
-        
-        //testing
-        exercise = e.generateExercise(3, 9, exercise);
-        System.out.println(e.printExercise(exercise));
-        
-        
-    }
-    
+    }    
 }
