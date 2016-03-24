@@ -12,8 +12,8 @@ package app.development;
  * @since 14/03/2016
  */
 public class Image {
-    String object;      //the object of the image
-    int count;          //the amount of objects in the image
+    String object;      //image file name
+    int count;          //if image is a button yes or no
     
     
 }

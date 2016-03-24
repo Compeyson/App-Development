@@ -16,7 +16,8 @@ public class ExerciseGeneration {
     String[] numberImages = new String[]{"0", "1", "2", "3", "4", "5", "6", "7",
         "8", "9", "10"};
     //yes, no and signs array
-    String[] signsImages = new String[]{"correct", "incorrect", "=", ">", "<", "clear"};
+    String[] signsImages = new String[]{"correct", "incorrect", "equals", 
+        "greaterthan", "smallerthan", "clear"};
     //declation question array
     private int[] question = {0,0,0,0,0,0,0,0,0}; 
     //initialize return value
@@ -96,7 +97,6 @@ public class ExerciseGeneration {
         int answer;
         int possibleAnswer1;
         int possibleAnswer2;
-        int answermax;
         int random;
         int[] fakeAnswers;
       
@@ -156,7 +156,9 @@ public class ExerciseGeneration {
         //assign question
         exercise.question = ("How many pieces of fruit do you see?");
         
-        System.out.println("answer images loaded");
+        //System.out.println("answer images loaded");
+        //load array
+        exercise.exerciseImages = loadArray(exercise);
         
         return exercise;
     }
@@ -216,6 +218,9 @@ public class ExerciseGeneration {
         //assign answers to answer slots
         exercise = assignAnswerSlots(exercise, answer, possibleAnswer1, 
                 possibleAnswer2);
+        
+        //load array
+        exercise.exerciseImages = loadArray(exercise);
         
         return exercise;
     }
@@ -278,6 +283,7 @@ public class ExerciseGeneration {
         //load images 2 and 8 to blank
         exercise.image2 = loadImages(2,5);
         exercise.image8 = loadImages(2,5);
+        //load image 5
         
         //generate left side
         leftanswer = (int)(Math.random()* max  + 1);
@@ -368,6 +374,8 @@ public class ExerciseGeneration {
                 break;
         }
         
+        //load array
+        exercise.exerciseImages = loadArray(exercise);
         
         return exercise;
     }
@@ -468,6 +476,9 @@ public class ExerciseGeneration {
         exercise = assignAnswerSlots(exercise, answer, possibleAnswer1, 
                 possibleAnswer2);
         
+         //load array
+        exercise.exerciseImages = loadArray(exercise);
+        
         return exercise;
     }
     
@@ -487,9 +498,7 @@ public class ExerciseGeneration {
          * I have no idea how to implement this method :(. Maybe by using other 
          * things than just fruit, airplanes and ghosts. Not sure if this will 
          * then satisfy the requirements of the tangibility principle
-         */
-//if this suffices then a simple addition of an array would suffice for now
-        
+         */        
         return exercise;
     }
     
@@ -650,7 +659,7 @@ public class ExerciseGeneration {
         }
         
         switch(kind){
-            case 0:
+            case 0: //fruit kinds
                 //more than 3 pieces of fruit on image requested
                 if (count > 3) {
                     throw new IllegalArgumentException("Count in load (fruit) "
@@ -662,25 +671,30 @@ public class ExerciseGeneration {
                 }else{
                     //decide fruit kind
                     image = (int)(Math.random() * (imageNames.length));
-                    returnImage.object = imageNames[image];
-                    returnImage.count = count;
+                    returnImage.object = imageNames[image] + count;
+                    returnImage.count = 0; //no button
                 }
                 break;
-            case 1:
+            case 1: //answers
                 returnImage.object = numberImages[count];
-                returnImage.count = count;
+                returnImage.count = 1; //button!
                 break;  
-            case 2:
-                returnImage.object = signsImages[count];
-                returnImage.count = 0;
+            case 2: //yes, no answers and signs = >, <
+                if(count > 1){
+                    returnImage.object = signsImages[count];
+                    returnImage.count = 0; //no button
+                }else{
+                    returnImage.object = signsImages[count];
+                    returnImage.count = 1; //button!
+                }
                 break;    
-            case 3:
+            case 3: //return apples
                 if(count == 0){
                     returnImage.object = signsImages[5];
-                    returnImage.count = 0;
+                    returnImage.count = 0; //no button
                 }else{
-                    returnImage.object = imageNames[0];
-                    returnImage.count = count;
+                    returnImage.object = imageNames[0] + count; //returns apples
+                    returnImage.count = 0; //no button
                 }
         }
         
@@ -724,6 +738,62 @@ public class ExerciseGeneration {
     }
     
     /**
+     * Method returns an array with objects if something is a button and the 
+     * image file name is the object
+     * 
+     * @param exercise is used to load the images from
+     * @return an array is returned with in information necessary for the 
+     * application
+     */
+    public Image[] loadArray(Exercise exercise){
+        Image[] finalOutput = null;
+        
+        //filling return array
+        for(int i = 0; i < 12; i++){
+            switch(i){
+                case 0:
+                    finalOutput[i] = exercise.image1;
+                    break;
+                case 1:
+                    finalOutput[i] = exercise.image2;
+                    break;
+                case 2:
+                    finalOutput[i] = exercise.image3;
+                    break;
+                case 3:
+                    finalOutput[i] = exercise.image4;
+                    break;
+                case 4:
+                    finalOutput[i] = exercise.image5;
+                    break;
+                case 5:
+                    finalOutput[i] = exercise.image6;
+                    break;
+                case 6:
+                    finalOutput[i] = exercise.image7;
+                    break;
+                case 7:
+                    finalOutput[i] = exercise.image8;
+                    break;
+                case 8:
+                    finalOutput[i] = exercise.image9;
+                    break;
+                case 9:
+                    finalOutput[i] = exercise.answer1;
+                    break;
+                case 10:
+                    finalOutput[i] = exercise.answer2;
+                    break;
+                case 11:
+                    finalOutput[i] = exercise.answer3;
+                    break;
+            }
+        }
+        
+        return finalOutput;
+    }
+    
+    /**
      * Exercise to readable input (only for verifying uses)
      * 
      */
@@ -747,8 +817,10 @@ public class ExerciseGeneration {
                 Integer.toString(exercise.image8.count) + " " + 
                 exercise.image9.object + " " +
                 Integer.toString(exercise.image9.count) + " answers: " + 
-                exercise.answer1.object + " " + exercise.answer2.object + " " + 
-                exercise.answer3.object + " correct answer location: " + 
+                exercise.answer1.object + "_" + exercise.answer1.count + " " 
+                + exercise.answer2.object + "_" + exercise.answer2.count + " " 
+                + exercise.answer3.object + "_" + exercise.answer3.count + " " 
+                + " correct answer location: " + 
                 Integer.toString(exercise.correctAnswer));
         
         return result;
@@ -763,7 +835,7 @@ public class ExerciseGeneration {
         Exercise exercise = new Exercise();
         
         //testing
-        exercise = e.generateExercise(1, 9, exercise);
+        exercise = e.generateExercise(3, 9, exercise);
         System.out.println(e.printExercise(exercise));
         
         

@@ -31,6 +31,13 @@ public class Exercise {
     Image image8;
     Image image9;
     
+    /* slot 0-8 are the question images for above the screen
+     * slot 9-11 are the answer images
+     * an image object consists of the file name of the image and a 0 if the
+     * image is not a button 1 if it is a button
+     */
+    Image[] exerciseImages;
+    
     //the position where the correct answer is located
     int correctAnswer;
     
