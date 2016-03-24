@@ -14,9 +14,9 @@ public class ExerciseGeneration {
         "banana", "pear", "orange"};
     //declaration of number images
     String[] numberImages = new String[]{"0", "1", "2", "3", "4", "5", "6", "7",
-        "8", "9"};
+        "8", "9", "10"};
     //yes, no and signs array
-    String[] signsImages = new String[]{"yes", "no", "=", ">", "<", "empty"};
+    String[] signsImages = new String[]{"correct", "incorrect", "=", ">", "<", "clear"};
     //declation question array
     private int[] question = {0,0,0,0,0,0,0,0,0}; 
     //initialize return value
@@ -98,6 +98,7 @@ public class ExerciseGeneration {
         int possibleAnswer2;
         int answermax;
         int random;
+        int[] fakeAnswers;
       
         System.out.println("Whoohoo in oneToOne method");
         
@@ -129,29 +130,10 @@ public class ExerciseGeneration {
         }   
         
         //generate "fake" answers maximum
-        switch(answer){
-            case 1:
-                possibleAnswer1 = 2;
-                possibleAnswer2 = 3;
-                break;
-            case 2:
-                possibleAnswer1 = 1;
-                possibleAnswer2 = 3;
-                break;
-            default:
-                if(max < 7){
-                    answermax = max + (int)(.5 * max);
-                }else{
-                    answermax = max;
-                }
-                //fakeanswer1
-                possibleAnswer1 = generateProxyAnswer(answermax, answer, 0);
-                //fakeanswer2
-                possibleAnswer2 = generateProxyAnswer(answermax, answer, 
-                        possibleAnswer1);
-                break;              
-        }
-                        
+        fakeAnswers = generateAnswers(answer, max);
+        possibleAnswer1 = fakeAnswers[0];
+        possibleAnswer2 = fakeAnswers[1];
+                                
         //load question images
         //this might be better to actually implement in loadImages
         question = randomizeImageLocation(question);
@@ -197,9 +179,9 @@ public class ExerciseGeneration {
         Image saveLocation4 = exercise.image4;
         Image saveLocation7 = exercise.image7;
         int answer = -1;
-        int answermax;
         int possibleAnswer1;
         int possibleAnswer2;
+        int[] fakeAnswers;
         
         //mirror the exercise
         //1 and 3
@@ -227,28 +209,9 @@ public class ExerciseGeneration {
         
         //assign new possible answers
         //generate "fake" answers maximum
-        switch(answer){
-            case 1:
-                possibleAnswer1 = 2;
-                possibleAnswer2 = 3;
-                break;
-            case 2:
-                possibleAnswer1 = 1;
-                possibleAnswer2 = 3;
-                break;
-            default:
-                if(max < 7){
-                    answermax = max + (int)(.5 * max);
-                }else{
-                    answermax = max;
-                }
-                //fakeanswer1
-                possibleAnswer1 = generateProxyAnswer(answermax, answer, 0);
-                //fakeanswer2
-                possibleAnswer2 = generateProxyAnswer(answermax, answer, 
-                        possibleAnswer1);
-                break;              
-        }
+        fakeAnswers = generateAnswers(answer, max);
+        possibleAnswer1 = fakeAnswers[0];
+        possibleAnswer2 = fakeAnswers[1];
         
         //assign answers to answer slots
         exercise = assignAnswerSlots(exercise, answer, possibleAnswer1, 
@@ -293,15 +256,15 @@ public class ExerciseGeneration {
             case 2:
                 //">" selection
                 exercise.question = ("Is number of pieces of fruit on the left "
-                        + "greater than to the number of pieces of fruit on the "
-                        + " right side");
+                        + "side of the screen greater than to the number of "
+                        + "pieces of fruit on the right side");
                 exercise.image5 = loadImages(2,3);
                 break;
             case 3:
                 //"<" selection
                 exercise.question = ("Is number of pieces of fruit on the left "
-                        + "smaller than to the number of pieces of fruit on the "
-                        + "right side");
+                        + "side of the screen smaller than to the number of "
+                        + "pieces of fruit on the right side");
                 exercise.image5 = loadImages(2,4);
                 break;
         }
@@ -417,17 +380,23 @@ public class ExerciseGeneration {
      *      make to complete the exercise
      * @param exercise is the exercise the top-level provides for the 
      *      method to work in
-     * @pre max >= 0
+     * @pre max > 0 && max <10
      * @modifies exercise
      * @return returns the exercise with correct values
      */
     public Exercise stableOrder(int max, Exercise exercise){
         int previous = 0;
         int answer;
-        int answermax;
         int possibleAnswer1;
         int possibleAnswer2;
         int i;
+        int[] fakeAnswers;
+        
+        //throws illegal maximum
+        if (max <= 0 || max >= 10) {
+            throw new IllegalArgumentException("Maximum in generateExercise has "
+                    + "invalid value: " + max);
+        }
         
         //initialize question
         exercise.question = ("How many apples do you see?");
@@ -480,28 +449,9 @@ public class ExerciseGeneration {
         
         //assign new possible answers
         //generate "fake" answers maximum
-        switch(answer){
-            case 1:
-                possibleAnswer1 = 2;
-                possibleAnswer2 = 3;
-                break;
-            case 2:
-                possibleAnswer1 = 1;
-                possibleAnswer2 = 3;
-                break;
-            default:
-                if(max < 7){
-                    answermax = max + (int)(.5 * max);
-                }else{
-                    answermax = max;
-                }
-                //fakeanswer1
-                possibleAnswer1 = generateProxyAnswer(answermax, answer, 0);
-                //fakeanswer2
-                possibleAnswer2 = generateProxyAnswer(answermax, answer, 
-                        possibleAnswer1);
-                break;              
-        }
+        fakeAnswers = generateAnswers(answer, max);
+        possibleAnswer1 = fakeAnswers[0];
+        possibleAnswer2 = fakeAnswers[1];
         
                
         exercise.image1 = loadImages(3,question[0]);
@@ -541,6 +491,43 @@ public class ExerciseGeneration {
 //if this suffices then a simple addition of an array would suffice for now
         
         return exercise;
+    }
+    
+    /**
+     * this method makes two fake answers to implement in the exercise
+     * 
+     * @param answer is the actual answer of the question
+     * @param max the allowed maximum of the exercise
+     * @return array fakeAnswers with two distinct fake answers
+     */
+    public int[] generateAnswers(int answer, int max){
+        int[] fakeAnswers =  new int[2];
+        int answermax;
+        
+        switch(answer){
+            case 1:
+                fakeAnswers[0] = 2;
+                fakeAnswers[1] = 3;
+                break;
+            case 2:
+                fakeAnswers[0] = 1;
+                fakeAnswers[1] = 3;
+                break;
+            default:
+                if(max < 7){
+                    answermax = max + (int)(.5 * max);
+                }else{
+                    answermax = max;
+                }
+                //fakeanswer1
+                fakeAnswers[0] = generateProxyAnswer(answermax, answer, 0);
+                //fakeanswer2
+                fakeAnswers[1] = generateProxyAnswer(answermax, answer, 
+                        fakeAnswers[0]);
+                break;              
+        }
+        
+        return fakeAnswers;
     }
     
     /**
@@ -776,36 +763,10 @@ public class ExerciseGeneration {
         Exercise exercise = new Exercise();
         
         //testing
-        exercise = e.generateExercise(4, 1, exercise);
+        exercise = e.generateExercise(1, 9, exercise);
         System.out.println(e.printExercise(exercise));
         
-        exercise = e.generateExercise(4, 9, exercise);
-        System.out.println(e.printExercise(exercise));
         
-        exercise = e.generateExercise(4, 9, exercise);
-        System.out.println(e.printExercise(exercise));
-        
-        exercise = e.generateExercise(4, 9, exercise);
-        System.out.println(e.printExercise(exercise));
-        
-        exercise = e.generateExercise(4, 9, exercise);
-        System.out.println(e.printExercise(exercise));
-        
-        exercise = e.generateExercise(4, 9, exercise);
-        System.out.println(e.printExercise(exercise));
-        
-        exercise = e.generateExercise(4, 9, exercise);
-        System.out.println(e.printExercise(exercise));
-        
-        exercise = e.generateExercise(4, 9, exercise);
-        System.out.println(e.printExercise(exercise));
-        
-        exercise = e.generateExercise(4, 9, exercise);
-        System.out.println(e.printExercise(exercise));
-        
-        exercise = e.generateExercise(4, 9, exercise);
-        System.out.println(e.printExercise(exercise));
-              
     }
     
 }
