@@ -19,7 +19,7 @@ public class Module {
     
     public int[] initializeModule(int moduleID){
         arraySpecifics[0] = moduleID;
-        //initialize module array
+        //initialize module array    
         for(int i = 1; i < 16; i++){
             if(i > 3 && i <15){
                 arraySpecifics[i] = -1;
@@ -51,6 +51,9 @@ public class Module {
             System.out.println("in if statement");
         }else{
             System.out.println("initializing exercise");
+            if(moduleID == 2 && arraySpecifics[4] == 2){
+                exercise.count =1;
+            }
             exercise = exerciseSpecifics(moduleID, arraySpecifics, exercise);
         }
         
@@ -69,8 +72,11 @@ public class Module {
         
         //initialization of the module
         if(arraySpecifics[4] == -1){
+            arraySpecifics[4] = 2;
+            
             //location next exercise answer should be loaded
             arraySpecifics[15] = 4;
+            System.out.println("in initial if statement");
         }else{
             loadLocation = arraySpecifics[15];
         
@@ -78,13 +84,18 @@ public class Module {
             if(answerCorrect){
                 arraySpecifics[loadLocation] = 1;
                 arraySpecifics[2] = arraySpecifics[2] + 1;
+                arraySpecifics[loadLocation] = 1;
+                System.out.println("answer was correct");
             }else{
                 arraySpecifics[loadLocation] = 0;
                 arraySpecifics[1] = arraySpecifics[1] + 1;
+                arraySpecifics[loadLocation] = 0;
+                System.out.println("answer was incorrect");
             } 
             
             //load next location
             arraySpecifics[15] = arraySpecifics[15] + 1;
+            System.out.println("load location: " + arraySpecifics[15]);
             if(arraySpecifics[15] > 14){
                 arraySpecifics[15] = 4;
             }
@@ -134,9 +145,9 @@ public class Module {
                 break;
             case 2: //orderIrrelevance
                 if(exercise.count == 0){ //not yet been flipped
-                    exercise = e.generateExercise(1,progress,exercise);
-                }else{//flipped new exercise
                     exercise = e.generateExercise(2,progress,exercise);
+                }else{//flipped new exercise
+                    exercise = e.generateExercise(1,progress,exercise);
                 }
                 break;
             case 3: //oneToOne
@@ -151,22 +162,6 @@ public class Module {
     }
     
     /**
-     * Exercise to readable input (only for verifying uses)
-     * 
-     * @param exercise
-     * @return 
-     */
-    public String printExercise(Exercise exercise){
-        String result;
-        result = ("question: " + exercise.exerciseImages[0].object + " " +
-                Integer.toString(exercise.image1.count) + " " + 
-                 " correct answer location: " + 
-                Integer.toString(exercise.correctAnswer));
-        
-        return result;
-    }
-    
-        /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
@@ -175,7 +170,7 @@ public class Module {
         ExerciseGeneration e = new ExerciseGeneration();
                 
         //testing
-        m.initializeModule(1);
+        m.initializeModule(4);
         exercise = m.getExercise(m, false, exercise);
         System.out.println(e.printExercise(exercise));
         

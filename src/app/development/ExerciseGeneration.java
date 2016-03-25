@@ -2,6 +2,7 @@ package app.development;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.lang.Character;
 
 /**
  *
@@ -99,8 +100,7 @@ public class ExerciseGeneration {
         int possibleAnswer2;
         int random;
         int[] fakeAnswers;
-      
-        System.out.println("Whoohoo in oneToOne method");
+        int[] question = {0,0,0,0,0,0,0,0,0}; 
         exercise.count = 0; //exercise has not yet been flipped
         
         //generate question
@@ -110,7 +110,6 @@ public class ExerciseGeneration {
         while(i > 0){
             while(j < 9){
                 random = (int)(Math.random()* 3 + 1);
-                System.out.println("random number is " + random);
                 if(random <= i){
                     question[j] = random;
                     i = i - random;
@@ -134,7 +133,7 @@ public class ExerciseGeneration {
         fakeAnswers = generateAnswers(answer, max);
         possibleAnswer1 = fakeAnswers[0];
         possibleAnswer2 = fakeAnswers[1];
-                                
+        
         //load question images
         //this might be better to actually implement in loadImages
         question = randomizeImageLocation(question);
@@ -147,8 +146,6 @@ public class ExerciseGeneration {
         exercise.image7 = loadImages(0,question[6]);
         exercise.image8 = loadImages(0,question[7]);
         exercise.image9 = loadImages(0,question[8]);
-        
-        System.out.println("question images loaded");
         
         //assign answers to answer slots
         exercise = assignAnswerSlots(exercise, answer, possibleAnswer1, 
@@ -299,7 +296,7 @@ public class ExerciseGeneration {
                 if(random <= i){
                     question[j] = random;
                     i = i - random;
-                    //System.out.println("i " + i);
+                    System.out.println("i " + i + "random " + random);
                     if(i == 0){
                         break;
                     }
@@ -326,7 +323,7 @@ public class ExerciseGeneration {
                 if(random <= n){
                     question[m + 3] = random;
                     n = n - random;
-                    //System.out.println("n " + n);
+                    System.out.println("n " + n + "random " + random);
                     if(n == 0){
                         break;
                     }
@@ -417,13 +414,16 @@ public class ExerciseGeneration {
             //get count of previous exercise
             switch (exercise.correctAnswer) {
                 case 1:
-                    previous = exercise.answer1.count;
+                    previous = Character.getNumericValue
+                                (exercise.answer1.object.charAt(0));
                     break;
                 case 2:
-                    previous = exercise.answer2.count;
+                    previous = Character.getNumericValue
+                                (exercise.answer2.object.charAt(0));
                     break;
                 case 3:
-                    previous = exercise.answer3.count;
+                    previous = Character.getNumericValue
+                                (exercise.answer3.object.charAt(0));
                     break;
             }
             //check to not exceed given maximum
@@ -435,6 +435,7 @@ public class ExerciseGeneration {
             }else{ //loading images in middle row
                 //loads central image
                 answer = previous + 1;
+                System.out.println(answer);
                 if(answer <= 3){
                     question[4] = answer;
                 }else{
@@ -621,9 +622,11 @@ public class ExerciseGeneration {
         
         
         //load correct answer
-        if(exercise.answer1.count == answer){
+        if(Character.getNumericValue
+        (exercise.answer1.object.charAt(0)) == answer){
             exercise.correctAnswer = 1;
-        }else if(exercise.answer2.count == answer){
+        }else if(Character.getNumericValue
+        (exercise.answer2.object.charAt(0)) == answer){
             exercise.correctAnswer = 2;
         }else{
             exercise.correctAnswer = 3;
