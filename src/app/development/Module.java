@@ -14,11 +14,31 @@ public class Module {
      * arraySpecifics[15] location of the last exercise
      */
     int[] arraySpecifics =  new int[16];
-    Exercise exercise = new Exercise();
+    String video;
+    boolean correctAnswer;
+    Exercise lastExercise;
     ExerciseGeneration e = new ExerciseGeneration();
     
     public int[] initializeModule(int moduleID){
         arraySpecifics[0] = moduleID;
+        correctAnswer = true;
+        lastExercise = new Exercise();
+        
+        switch(moduleID){
+            case 1: //stableOrder   
+                video = "stableOrder";
+                break;
+            case 2: //orderIrrelevance
+                video = "orderIrrelevance";
+                break;
+            case 3: //oneToOne
+                video = "oneToOne";
+                break;
+            case 4: //cardinality
+                video = "cardinality";
+                break;
+        }
+        
         //initialize module array    
         for(int i = 1; i < 16; i++){
             if(i > 3 && i <15){
@@ -33,31 +53,35 @@ public class Module {
     
     /**
      * 
-     * @param module
-     * @param answerCorrect check if the last answer was correct
-     * @param exercise
      * @return 
      */
-    public Exercise getExercise(Module module, boolean answerCorrect, 
-            Exercise exercise){
+    public Exercise getExercise(){
         int moduleID = arraySpecifics[0];
         int nextModule;
+        Exercise exercise = new Exercise();
         
-        arraySpecifics = checkModuleState(arraySpecifics, answerCorrect);
-        System.out.println("back in get exercise module");
+        arraySpecifics = checkModuleState(arraySpecifics, correctAnswer);
+
         if(arraySpecifics[3] == 1){ //module is complete
             nextModule = arraySpecifics[0] + 1;
             initializeModule(nextModule);
-            System.out.println("in if statement");
+            exercise.playVideo = true;
         }else{
-            System.out.println("initializing exercise");
+            exercise.playVideo = false;
             if(moduleID == 2 && arraySpecifics[4] == 2){
-                exercise.count =1;
+                exercise.count = 1;
             }
-            exercise = exerciseSpecifics(moduleID, arraySpecifics, exercise);
         }
         
+        exercise = exerciseSpecifics(moduleID, arraySpecifics, lastExercise);
+        
+        lastExercise = exercise;
+        
         return exercise;
+    }
+    
+    public void submitAnswer(boolean answer){
+       correctAnswer = answer; 
     }
     
     /**
@@ -76,7 +100,6 @@ public class Module {
             
             //location next exercise answer should be loaded
             arraySpecifics[15] = 4;
-            System.out.println("in initial if statement");
         }else{
             loadLocation = arraySpecifics[15];
         
@@ -85,12 +108,10 @@ public class Module {
                 arraySpecifics[loadLocation] = 1;
                 arraySpecifics[2] = arraySpecifics[2] + 1;
                 arraySpecifics[loadLocation] = 1;
-                System.out.println("answer was correct");
             }else{
                 arraySpecifics[loadLocation] = 0;
                 arraySpecifics[1] = arraySpecifics[1] + 1;
                 arraySpecifics[loadLocation] = 0;
-                System.out.println("answer was incorrect");
             } 
             
             //load next location
@@ -104,8 +125,7 @@ public class Module {
             for(int i = 4; i < 15; i++){
                 rightcount = rightcount + arraySpecifics[i];
             }
-            
-            System.out.println("counted questions");
+
         
             //checking if module is finished
             if(rightcount > 7){
@@ -166,21 +186,21 @@ public class Module {
      */
     public static void main(String[] args) {
         Module m = new Module();
-        Exercise exercise = new Exercise();
         ExerciseGeneration e = new ExerciseGeneration();
+        Exercise exercise;
                 
         //testing
-        m.initializeModule(4);
-        exercise = m.getExercise(m, false, exercise);
+        m.initializeModule(1);
+        exercise = m.getExercise();
         System.out.println(e.printExercise(exercise));
         
-        m.getExercise(m, true, exercise);
+        exercise = m.getExercise();
         System.out.println(e.printExercise(exercise));
         
-        m.getExercise(m, true, exercise);
+        exercise = m.getExercise();
         System.out.println(e.printExercise(exercise));
         
-        m.getExercise(m, true, exercise);
+        exercise = m.getExercise();
         System.out.println(e.printExercise(exercise));
     } 
 }

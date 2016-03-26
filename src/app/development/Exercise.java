@@ -46,5 +46,8 @@ public class Exercise {
     
     //for order irrelevance method
     int count;
+    
+    //need to play video
+    boolean playVideo;
        
 }
